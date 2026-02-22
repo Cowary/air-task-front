@@ -14,16 +14,16 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      # Передаём адрес backend при сборке
+      args:
+        - BACKEND_URL=${BACKEND_URL:-http://localhost:8090}
+    # Пробрасываем BACKEND_URL для nginx (используется в runtime)
+    environment:
+      - BACKEND_URL=${BACKEND_URL:-http://localhost:8090}
     # Перезапуск контейнера при падении
     restart: unless-stopped
     # Проброс портов: внешний:внутренний
     ports:
       - "8080:80"
-    # Адрес backend-сервера (используется в nginx.conf)
-    # По умолчанию: localhost:8090 (для случая, когда backend на той же машине)
-    # Для Docker: http://host.docker.internal:8090 (чтобы обратиться к хосту)
-    # Или: http://air-task-back:8090 (если backend в том же docker-compose)
-    environment:
-      - BACKEND_URL=${BACKEND_URL:-http://localhost:8090}
     # Имя контейнера для удобства
     container_name: air-task-front

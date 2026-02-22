@@ -5,7 +5,7 @@ import axios from 'axios';
 // В Vite переменные окружения доступны через import.meta.env
 // Префикс VITE_ обязателен для переменных, доступных в браузере
 // По умолчанию используем localhost:8090
-const backendUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:8090';
+const backendUrl = 'http://192.168.1.79:8101';
 
 // Создаём экземпляр axios с базовой конфигурацией
 const apiClient = axios.create({

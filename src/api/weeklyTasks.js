@@ -58,7 +58,7 @@ export const completeWeeklyTask = async (weeklyEntityId) => {
     // completedDate - текущая дата и время в формате ISO
     const requestBody = {
       weeklyEntityId: weeklyEntityId,
-      completedDate: new Date().toISOString()
+      completedDate: getMoscowTimeISO()
     };
     
     // Выполняем POST-запрос для создания записи о выполненной задаче
@@ -71,6 +71,21 @@ export const completeWeeklyTask = async (weeklyEntityId) => {
     // Пробрасываем ошибку дальше
     throw error;
   }
+};
+
+/**
+ * Возвращает текущее время в формате ISO с таймзоной Москвы
+ */
+const getMoscowTimeISO = () => {
+  return new Date().toLocaleString('sv-SE', {
+    timeZone: 'Europe/Moscow',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit'
+  }).replace(' ', 'T') + '+03:00';
 };
 
 // Экспортируем объект apiClient на случай, если нужно будет делать другие запросы

@@ -14,18 +14,6 @@ export default defineConfig({
   server: {
     // Порт, на котором запускается dev-сервер
     port: 5173,
-
-    // Проксирование API-запросов к backend-серверу
-    // Это позволяет избежать проблем с CORS при разработке
-    proxy: {
-      // Все запросы к /api будут перенаправляться на backend
-      '/api': {
-        // Адрес backend-сервера
-        target: 'http://localhost:8090',
-        // Не изменять заголовок Origin
-        changeOrigin: true,
-      }
-    }
   },
 
   // Настройки для production-сборки

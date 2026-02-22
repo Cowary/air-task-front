@@ -2,9 +2,12 @@
 import axios from 'axios';
 
 // Создаём экземпляр axios с базовой конфигурацией
-// baseURL не указан - это позволяет использовать прокси в режиме разработки (vite.config.js)
-// и nginx-проксирование в production
+// Указываем прямой адрес backend-сервера
 const apiClient = axios.create({
+  // Базовая часть URL для всех запросов
+  // Запросы будут уходить напрямую на этот адрес
+  baseURL: 'http://localhost:8090',
+
   // Заголовки по умолчанию для всех запросов
   headers: {
     'Content-Type': 'application/json'  // говорим серверу, что отправляем JSON

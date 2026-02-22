@@ -1,12 +1,17 @@
 // Импортируем axios для выполнения HTTP-запросов к серверу
 import axios from 'axios';
 
+// Получаем адрес backend из переменной окружения
+// В Vite переменные окружения доступны через import.meta.env
+// Префикс VITE_ обязателен для переменных, доступных в браузере
+// По умолчанию используем localhost:8090
+const backendUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:8090';
+
 // Создаём экземпляр axios с базовой конфигурацией
-// Указываем прямой адрес backend-сервера
 const apiClient = axios.create({
   // Базовая часть URL для всех запросов
   // Запросы будут уходить напрямую на этот адрес
-  baseURL: 'http://localhost:8090',
+  baseURL: backendUrl,
 
   // Заголовки по умолчанию для всех запросов
   headers: {

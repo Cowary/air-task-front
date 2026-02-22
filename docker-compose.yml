@@ -20,7 +20,10 @@ services:
     ports:
       - "8080:80"
     # Адрес backend-сервера (используется в nginx.conf)
-    # Для работы в Docker нужно изменить localhost на host.docker.internal
-    # или на имя сервиса backend в docker-compose
+    # По умолчанию: localhost:8090 (для случая, когда backend на той же машине)
+    # Для Docker: http://host.docker.internal:8090 (чтобы обратиться к хосту)
+    # Или: http://air-task-back:8090 (если backend в том же docker-compose)
+    environment:
+      - BACKEND_URL=${BACKEND_URL:-http://localhost:8090}
     # Имя контейнера для удобства
     container_name: air-task-front

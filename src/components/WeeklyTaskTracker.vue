@@ -263,13 +263,13 @@ export default {
 /* Заголовок */
 h1 {
   text-align: center;
-  color: #333;
+  color: var(--text-primary);
   margin-bottom: 5px;
 }
 
 .subtitle {
   text-align: center;
-  color: #666;
+  color: var(--text-secondary);
   margin-bottom: 30px;
 }
 
@@ -280,8 +280,8 @@ h1 {
 }
 
 .spinner {
-  border: 4px solid #f3f3f3;
-  border-top: 4px solid #3498db;
+  border: 4px solid var(--spinner-bg);
+  border-top: 4px solid var(--accent-primary);
   border-radius: 50%;
   width: 40px;
   height: 40px;
@@ -298,15 +298,15 @@ h1 {
 .error-message {
   text-align: center;
   padding: 30px;
-  background-color: #ffe6e6;
+  background-color: var(--accent-red-light);
   border-radius: 8px;
-  color: #cc0000;
+  color: var(--accent-red);
 }
 
 .retry-btn {
   margin-top: 15px;
   padding: 10px 20px;
-  background-color: #3498db;
+  background-color: var(--accent-primary);
   color: white;
   border: none;
   border-radius: 5px;
@@ -314,7 +314,7 @@ h1 {
 }
 
 .retry-btn:hover {
-  background-color: #2980b9;
+  background-color: #5a6fd6;
 }
 
 /* Секции */
@@ -323,26 +323,26 @@ h1 {
 }
 
 .section h2 {
-  color: #444;
-  border-bottom: 2px solid #eee;
+  color: var(--text-primary);
+  border-bottom: 2px solid var(--border-color);
   padding-bottom: 10px;
   margin-bottom: 15px;
 }
 
 .incomplete-section h2 {
-  border-bottom-color: #ff9800;
+  border-bottom-color: var(--accent-orange);
 }
 
 .completed-section h2 {
-  border-bottom-color: #4caf50;
+  border-bottom-color: var(--accent-green);
 }
 
 /* Пустое состояние */
 .empty-message {
   text-align: center;
   padding: 20px;
-  color: #888;
-  background-color: #f9f9f9;
+  color: var(--text-muted);
+  background-color: var(--bg-tertiary);
   border-radius: 8px;
 }
 
@@ -357,42 +357,42 @@ h1 {
 .task-card {
   padding: 15px;
   border-radius: 8px;
-  background-color: #fff;
-  border: 2px solid #eee;
+  background-color: var(--bg-secondary);
+  border: 2px solid var(--border-color);
   cursor: pointer;
   transition: all 0.2s ease;
   position: relative;
 }
 
 .task-card:hover {
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 8px var(--shadow-color);
 }
 
 /* Стили для невыполненных задач */
 .task-card.incomplete {
-  border-left: 4px solid #ff9800;
+  border-left: 4px solid var(--accent-orange);
 }
 
 .task-card.incomplete:hover,
 .task-card.incomplete.selected {
-  background-color: #fff8e1;
-  border-color: #ff9800;
+  background-color: var(--accent-orange-light);
+  border-color: var(--accent-orange);
 }
 
 .task-card.incomplete.selected {
-  box-shadow: 0 0 0 2px #ff9800;
+  box-shadow: 0 0 0 2px var(--accent-orange);
 }
 
 /* Стили для выполненных задач */
 .task-card.completed {
-  border-left: 4px solid #4caf50;
-  background-color: #f1f8e9;
+  border-left: 4px solid var(--accent-green);
+  background-color: var(--accent-green-light);
 }
 
 /* Название проекта */
 .task-project {
   font-size: 12px;
-  color: #666;
+  color: var(--text-secondary);
   margin-bottom: 5px;
 }
 
@@ -400,7 +400,7 @@ h1 {
 .task-name {
   font-size: 16px;
   font-weight: 500;
-  color: #333;
+  color: var(--text-primary);
   margin-bottom: 10px;
 }
 
@@ -414,25 +414,25 @@ h1 {
 .progress-bar {
   flex: 1;
   height: 8px;
-  background-color: #e0e0e0;
+  background-color: var(--border-light);
   border-radius: 4px;
   overflow: hidden;
 }
 
 .progress-fill {
   height: 100%;
-  background-color: #ff9800;
+  background-color: var(--accent-orange);
   border-radius: 4px;
   transition: width 0.3s ease;
 }
 
 .task-card.completed .progress-fill {
-  background-color: #4caf50;
+  background-color: var(--accent-green);
 }
 
 .progress-text {
   font-size: 12px;
-  color: #666;
+  color: var(--text-secondary);
   white-space: nowrap;
 }
 
@@ -441,7 +441,7 @@ h1 {
   position: absolute;
   top: 10px;
   right: 10px;
-  background-color: #ff9800;
+  background-color: var(--accent-orange);
   color: white;
   padding: 4px 8px;
   border-radius: 4px;
@@ -453,7 +453,7 @@ h1 {
   position: absolute;
   top: 10px;
   right: 10px;
-  background-color: #4caf50;
+  background-color: var(--accent-green);
   color: white;
   padding: 4px 8px;
   border-radius: 4px;
@@ -466,7 +466,7 @@ h1 {
   width: 100%;
   padding: 15px;
   margin-top: 15px;
-  background-color: #ff9800;
+  background-color: var(--accent-orange);
   color: white;
   border: none;
   border-radius: 8px;
@@ -481,7 +481,7 @@ h1 {
 }
 
 .complete-btn:disabled {
-  background-color: #ccc;
+  background-color: var(--text-muted);
   cursor: not-allowed;
 }
 
@@ -489,8 +489,8 @@ h1 {
 .back-button {
   display: inline-block;
   padding: 8px 16px;
-  background-color: #6c757d;
-  color: white;
+  background-color: var(--bg-tertiary);
+  color: var(--text-primary);
   text-decoration: none;
   border-radius: 5px;
   font-size: 14px;
@@ -499,6 +499,6 @@ h1 {
 }
 
 .back-button:hover {
-  background-color: #5a6268;
+  background-color: var(--border-color);
 }
 </style>

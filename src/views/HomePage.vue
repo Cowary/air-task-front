@@ -34,11 +34,12 @@ const version = packageJson.version
 .home-content {
   text-align: center;
   padding: 40px;
-  background: white;
+  background: var(--bg-secondary);
   border-radius: 16px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
   max-width: 400px;
   width: 90%;
+  transition: background-color 0.3s ease;
 }
 
 .project-title {
@@ -51,13 +52,13 @@ const version = packageJson.version
 }
 
 .project-subtitle {
-  color: #666;
+  color: var(--text-secondary);
   font-size: 1.1rem;
   margin: 0 0 10px 0;
 }
 
 .version {
-  color: #999;
+  color: var(--text-muted);
   font-size: 0.9rem;
   margin: 0 0 20px 0;
 }

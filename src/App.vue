@@ -1,30 +1,40 @@
 <script setup>
-import HelloWorld from './components/HelloWorld.vue'
+/**
+ * Главный компонент приложения
+ * 
+ * В этом файле мы просто импортируем и отображаем компонент WeeklyTaskTracker,
+ * который содержит всю логику отображения и управления задачами.
+ */
+
+// Импортируем компонент для отслеживания еженедельных задач
+import WeeklyTaskTracker from './components/WeeklyTaskTracker.vue';
 </script>
 
 <template>
-  <div>
-    <a href="https://vite.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
-  </div>
-  <HelloWorld msg="Vite + Vue" />
+  <!-- 
+    Компонент WeeklyTaskTracker принимает на себя всю работу по:
+    1. Загрузке данных с сервера
+    2. Отображению списка задач
+    3. Обработке действий пользователя
+  -->
+  <WeeklyTaskTracker />
 </template>
 
-<style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
+<style>
+/* 
+ * Глобальные стили приложения
+ * Эти стили применяются ко всему приложению
+ */
+
+/* Сброс базовых отступов */
+body {
+  margin: 0;
+  padding: 0;
 }
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
+
+/* Цвет фона страницы */
+#app {
+  background-color: #f5f5f5;
+  min-height: 100vh;
 }
 </style>

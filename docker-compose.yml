@@ -1,0 +1,25 @@
+# Docker Compose конфигурация для запуска frontend-приложения
+# Использование: docker-compose up --build
+
+version: '3.8'
+
+services:
+  # Сервис frontend-приложения
+  air-task-front:
+    # Собираем образ из Dockerfile в текущей директории
+    build:
+      context: .
+      dockerfile: Dockerfile
+    # Перезапуск контейнера при падении
+    restart: unless-stopped
+    # Проброс портов: внешний:внутренний
+    ports:
+      - "8080:80"
+    # volumes - для горячей перезагрузки при разработке (опционально)
+    # volumes:
+    #   - ./dist:/usr/share/nginx/html:ro
+    # Переменные окружения (опционально)
+    environment:
+      - NODE_ENV=production
+    # Имя контейнера для удобства
+    container_name: air-task-front

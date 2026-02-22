@@ -1,5 +1,9 @@
 # Docker Compose конфигурация для запуска frontend-приложения
 # Использование: docker-compose up --build
+#
+# Настройка backend:
+# По умолчанию: localhost:8090
+# Изменить: BACKEND_URL=http://air-task-back:8090 docker-compose up -d
 
 version: '3.8'
 
@@ -15,11 +19,10 @@ services:
     # Проброс портов: внешний:внутренний
     ports:
       - "8080:80"
-    # volumes - для горячей перезагрузки при разработке (опционально)
-    # volumes:
-    #   - ./dist:/usr/share/nginx/html:ro
-    # Переменные окружения (опционально)
+    # Адрес backend-сервера
+    # По умолчанию: localhost:8090 (для случая, когда backend на той же машине)
+    # Для Docker: http://air-task-back:8090 (имя сервиса backend в compose)
     environment:
-      - NODE_ENV=production
+      - BACKEND_URL=${BACKEND_URL:-http://localhost:8090}
     # Имя контейнера для удобства
     container_name: air-task-front

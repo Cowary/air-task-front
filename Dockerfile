@@ -10,14 +10,12 @@ WORKDIR /app
 COPY package*.json ./
 
 # Устанавливаем зависимости проекта
-# Используем --legacy-peer-deps для совместимости с некоторыми версиями пакетов
 RUN npm install
 
 # Копируем остальные исходные файлы проекта
 COPY . .
 
 # Собираем Vue-приложение для продакшена
-# Это создаёт оптимизированные файлы в папке dist
 RUN npm run build
 
 # =============================================================================
@@ -28,15 +26,27 @@ RUN npm run build
 FROM nginx:alpine
 
 # Копируем собранные файлы из стадии builder в директорию nginx
-# Nginx будет раздавать эти файлы как веб-сервер
 COPY --from=builder /app/dist /usr/share/nginx/html
 
-# Копируем конфигурацию nginx
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+# Устанавливаем envsubst для подстановки переменных окружения
+RUN apk add --no-cache openssl
+
+# Значения по умолчанию для переменных окружения
+# Если BACKEND_URL не передана, используется localhost:8090
+ENV BACKEND_URL=http://localhost:8090
+
+# Копируем шаблон конфига nginx
+COPY nginx.conf.template /etc/nginx/conf.d/default.conf.template
+
+# Создаём скрипт entrypoint, который генерирует конфиг с подставленными переменными
+RUN echo '#!/bin/sh' > /entrypoint.sh && \
+    echo 'export BACKEND_URL=${BACKEND_URL:-http://localhost:8090}' >> /entrypoint.sh && \
+    echo 'envsubst "\${BACKEND_URL}" < /etc/nginx/conf.d/default.conf.template > /etc/nginx/conf.d/default.conf' >> /entrypoint.sh && \
+    echo 'nginx -g "daemon off;"' >> /entrypoint.sh && \
+    chmod +x /entrypoint.sh
 
 # Указываем, какой порт открыть (nginx по умолчанию слушает 80)
 EXPOSE 80
 
-# Команда, которая выполняется при запуске контейнера
-# Запускает nginx в foreground режиме (не как демон)
-CMD ["nginx", "-g", "daemon off;"]
+# Используем entrypoint для генерации конфига с переменными окружения
+ENTRYPOINT ["/entrypoint.sh"]

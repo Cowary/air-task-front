@@ -1,5 +1,8 @@
 <template>
   <div class="container">
+    <!-- Кнопка возврата на главную -->
+    <router-link to="/" class="back-button">← На главную</router-link>
+
     <!-- Заголовок приложения -->
     <h1>📋 Еженедельные задачи</h1>
     <p class="subtitle">Отслеживание выполнения задач на текущей неделе</p>
@@ -480,5 +483,22 @@ h1 {
 .complete-btn:disabled {
   background-color: #ccc;
   cursor: not-allowed;
+}
+
+/* Кнопка возврата на главную */
+.back-button {
+  display: inline-block;
+  padding: 8px 16px;
+  background-color: #6c757d;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  font-size: 14px;
+  margin-bottom: 15px;
+  transition: background-color 0.2s;
+}
+
+.back-button:hover {
+  background-color: #5a6268;
 }
 </style>

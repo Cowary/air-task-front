@@ -1,8 +1,11 @@
 <script setup>
+import packageJson from '../../package.json'
+
 /**
  * Главная страница приложения
  * Отображает название проекта и навигацию
  */
+const version = packageJson.version
 </script>
 
 <template>
@@ -10,7 +13,8 @@
     <div class="home-content">
       <h1 class="project-title">Air-Task</h1>
       <p class="project-subtitle">Система отслеживания еженедельных задач</p>
-      
+      <p class="version">Версия {{ version }}</p>
+
       <router-link to="/weekly-tasks" class="nav-button">
         Еженедельные задачи
       </router-link>
@@ -49,7 +53,13 @@
 .project-subtitle {
   color: #666;
   font-size: 1.1rem;
-  margin: 0 0 30px 0;
+  margin: 0 0 10px 0;
+}
+
+.version {
+  color: #999;
+  font-size: 0.9rem;
+  margin: 0 0 20px 0;
 }
 
 .nav-button {

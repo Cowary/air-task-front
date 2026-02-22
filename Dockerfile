@@ -3,10 +3,10 @@
 FROM node:20-alpine AS builder
 
 # Аргумент для передачи адреса backend при сборке
-# Использование: docker build --build-arg BACKEND_URL=http://host.docker.internal:8090 .
-ARG BACKEND_URL=http://localhost:8090
+# Использование: docker build --build-arg VITE_BACKEND_URL=http://host.docker.internal:8090 .
+ARG VITE_BACKEND_URL=http://localhost:8090
 # Преобразуем в переменную Vite (VITE_ обязателен для встраивания в код)
-ENV BACKEND_URL=$BACKEND_URL
+ENV VITE_BACKEND_URL=$VITE_BACKEND_URL
 
 # Устанавливаем рабочую директорию внутри контейнера
 WORKDIR /app
@@ -21,9 +21,9 @@ RUN npm install
 # Копируем остальные исходные файлы проекта
 COPY . .
 
-# Передаём BACKEND_URL как переменную окружения для сборки
+# Передаём VITE_BACKEND_URL как переменную окружения для сборки
 # VITE_ переменные встраиваются в код при сборке
-ENV BACKEND_URL=$BACKEND_URL
+ENV VITE_BACKEND_URL=$VITE_BACKEND_URL
 
 # Собираем Vue-приложение для продакшена
 RUN npm run build

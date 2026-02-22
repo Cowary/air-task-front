@@ -3,7 +3,7 @@
 #
 # Настройка backend:
 # По умолчанию: localhost:8090
-# Изменить: BACKEND_URL=http://air-task-back:8090 docker-compose up -d
+# Изменить: VITE_BACKEND_URL=http://air-task-back:8090 docker-compose up -d
 
 version: '3.8'
 
@@ -16,10 +16,10 @@ services:
       dockerfile: Dockerfile
       # Передаём адрес backend при сборке
       args:
-        - BACKEND_URL=${BACKEND_URL:-http://localhost:8090}
-    # Пробрасываем BACKEND_URL для nginx (используется в runtime)
+        - VITE_BACKEND_URL=${VITE_BACKEND_URL:-http://localhost:8090}
+    # Пробрасываем VITE_BACKEND_URL для nginx (используется в runtime)
     environment:
-      - BACKEND_URL=${BACKEND_URL:-http://localhost:8090}
+      - VITE_BACKEND_URL=${VITE_BACKEND_URL:-http://localhost:8090}
     # Перезапуск контейнера при падении
     restart: unless-stopped
     # Проброс портов: внешний:внутренний

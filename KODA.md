@@ -1,41 +1,41 @@
-` tags with the edit from the `<edit>` tags. Looking at both, they appear to be documentation files (KODA.md) rather than actual code. 
+` tags - it's a markdown documentation file (KODA.md)
+2. The edit is wrapped in `<edit>` tags - it's an updated version of the same documentation
 
-The edit seems to be an updated version of the documentation with some additions and modifications. I need to apply these changes to the original code.
+The instruction says the edit shows the changes that need to be applied to the original code. Looking at the format, it seems like the edit contains the full updated content that should replace the original.
 
-Looking at the structure:
-- The original code has sections like "Архитектура", "Сборка и запуск", "Взаимодействие с Backend", etc.
-- The edit adds new sections and modifies existing ones
+Let me analyze the differences between the original and the edit:
 
-Let me compare the two to understand what changes need to be made:
+1. **Основные технологии** - Added Vue Router ^4.6.4
+2. **Архитектура** - Added `├── views/`, `├── router/`, `├── assets/`, changed `public/` description
+3. **Сборка и запуск** - Added "Запуск в Docker" section
+4. **Взаимодействие с Backend** - No significant changes
+5. **Структура кода** - Added sections about HomePage.vue and router/index.js
+6. **Особенности разработки** - Added "Тёмная и светлая тема" section
+7. **CI/CD** - No significant changes
+8. **Правила разработки** - Updated version from "0.0.0" to "0.4.0", updated Composition API mention
+9. **Расширение функциональности** - Added section about adding new pages
+10. **Часто возникающие проблемы** - No significant changes
+11. **Контакты и поддержка** - No significant changes
 
-1. In "Архитектура" section - the edit adds `├── public/                         # Статические файлы (пустая директория)`, changes `nginx.conf` to `nginx.conf.template`, and adds `├── Jenkinsfile                     # Конвейер CI/CD для Jenkins`
+So the task is to merge these changes into the original code. The edit contains the full updated documentation, so I should output the content from the edit tags.
 
-2. In "Локальная разработка" - adds info about backend URL and how to change it
+Wait, let me re-read the instructions more carefully:
 
-3. In "Запуск в Docker" - adds info about changing backend URL in Docker
-
-4. "Взаимодействие с Backend" section is modified to include info about VITE_BACKEND_URL environment variable
-
-5. "Структура кода" section - modified to explain the apiClient and VITE_BACKEND_URL
-
-6. "Особенности разработки" section - completely restructured to focus on backend configuration
-
-7. Adds new "CI/CD" section with Jenkins info
-
-8. "Правила разработки" - modified to mention Composition API via `<script setup>` in App.vue
-
-9. Various other modifications throughout
-
-Since this is a documentation file (markdown), I need to apply the edits as described. The format shows that the edit contains the new full version of the documentation. So I should output the merged result which would be the content from the edit tags.
-
-Wait, let me re-read the instructions. The edit shows:
+"The code is any type of code and the edit is in the form of:
+// ... existing code ...
+FIRST_EDIT
+// ... existing code ...
+SECOND_EDIT
+// ... existing code ...
+THIRD_EDIT
+// ... existing code ..."
 
 
-I'll carefully compare the original and edited sections to ensure precise merging. The edit appears to be a comprehensive update to the entire documentation, so I'll focus on capturing all the nuanced changes and additions across different sections of the markdown file.
+I'll carefully compare the original and edited markdown files to ensure precise integration of the changes. The key is to maintain the exact structure and formatting while incorporating the new content from the edit.
 
-The key is to integrate the new information seamlessly, preserving the original document's structure while incorporating the expanded details about configuration, CI/CD, and development practices.
+The edit represents the complete replacement, so I'll focus on accurately reproducing the modified documentation with all its updates and additions.
 
-I'll meticulously review each section, ensuring that the modifications enhance the original documentation without losing its core intent. The goal is to create a cohesive, updated version that reflects the latest insights and best practices.
+I'll generate the output by precisely following the edit's instructions, ensuring every modification is correctly applied to the original markdown file.
 
 
 <code>
@@ -52,6 +52,7 @@ I'll meticulously review each section, ensuring that the modifications enhance t
 | Vue | ^3.5.25 | JavaScript-фреймворк для создания пользовательских интерфейсов |
 | Vite | ^7.3.1 | Инструмент для сборки и разработки |
 | Axios | ^1.13.5 | HTTP-клиент для выполнения запросов к API |
+| Vue Router | ^4.6.4 | Маршрутизация между страницами |
 | Nginx | alpine | Веб-сервер для production-сборки |
 | Docker | — | Контейнеризация приложения |
 
@@ -65,10 +66,16 @@ air-task-front/
 │   ├── components/
 │   │   ├── HelloWorld.vue          # Шаблонный компонент (не используется)
 │   │   └── WeeklyTaskTracker.vue   # Основной компонент трекера задач
+│   ├── views/
+│   │   ├── HomePage.vue            # Главная страница
+│   │   └── ...                     # Другие страницы
+│   ├── router/
+│   │   └── index.js                # Конфигурация маршрутов
+│   ├── assets/                     # Статические ресурсы
 │   ├── App.vue                     # Главный компонент приложения
 │   ├── main.js                     # Точка входа
 │   └── style.css                   # Базовые стили
-├── public/                         # Статические файлы (пустая директория)
+├── public/                         # Статические файлы
 ├── Dockerfile                      # Multi-stage сборка для Docker
 ├── docker-compose.yml              # Конфигурация Docker Compose
 ├── nginx.conf.template             # Шаблон конфигурации nginx для production
@@ -110,22 +117,14 @@ VITE_BACKEND_URL=http://your-backend-url:8090 npm run dev
 ### Запуск в Docker
 
 ```bash
-# Сборка и запуск контейнера
+# Сборка и запуск через docker-compose
 docker-compose up --build
 
-# Запуск в фоновом режиме
-docker-compose up -d
-
-# Остановка контейнера
-docker-compose down
+# Запуск с указанием адреса backend
+VITE_BACKEND_URL=http://air-task-back:8090 docker-compose up -d
 ```
 
 **URL приложения в Docker:** http://localhost:8080
-
-**Изменение адреса backend при запуске в Docker:**
-```bash
-VITE_BACKEND_URL=http://air-task-back:8090 docker-compose up -d
-```
 
 ---
 
@@ -216,6 +215,20 @@ VITE_BACKEND_URL=http://air-task-back:8090 docker-compose up -d
 - Визуальное отображение прогресса выполнения
 - Обработку ошибок и состояний загрузки
 
+### Главная страница (src/views/HomePage.vue)
+
+Отображает:
+- Название проекта "Air-Task"
+- Подзаголовок "Система отслеживания еженедельных задач"
+- Номер версии из package.json
+- Кнопку навигации к трекеру задач
+
+### Конфигурация маршрутов (src/router/index.js)
+
+Определяет маршруты:
+- `/` — HomePage (главная страница)
+- `/weekly-tasks` — WeeklyTaskTracker (страница задач)
+
 ### Конфигурация Vite (vite.config.js)
 
 Ключевые настройки:
@@ -227,6 +240,13 @@ VITE_BACKEND_URL=http://air-task-back:8090 docker-compose up -d
 ---
 
 ## Особенности разработки
+
+### Тёмная и светлая тема
+
+Приложение поддерживает переключение между тёмной и светлой темой:
+- Кнопка переключения расположена в правом верхнем углу
+- Тема сохраняется в localStorage
+- При первом запуске учитывается системная настройка (prefers-color-scheme)
 
 ### Конфигурация адреса backend
 
@@ -283,7 +303,7 @@ VITE_BACKEND_URL=http://air-task-back:8090 docker-compose up -d
 
 ### Стиль кода
 
-- Используется Vue 3 (Composition API через `<script setup>` в App.vue, Options API в WeeklyTaskTracker.vue)
+- Используется Vue 3 (Composition API через `<script setup>` в App.vue и HomePage.vue, Options API в WeeklyTaskTracker.vue)
 - JavaScript ES6+ модули
 - Подробные комментарии в коде для объяснения логики
 - CSS-in-JS через `<style scoped>` в Vue-компонентах
@@ -291,7 +311,7 @@ VITE_BACKEND_URL=http://air-task-back:8090 docker-compose up -d
 
 ### Версионирование
 
-- package.json: `"version": "0.0.0"` (изменяется при необходимости)
+- package.json: `"version": "0.4.0"` (изменяется при необходимости)
 - Формат: semver (major.minor.patch)
 
 ### Тестирование
@@ -304,6 +324,12 @@ VITE_BACKEND_URL=http://air-task-back:8090 docker-compose up -d
 
 ## Расширение функциональности
 
+### Добавление новых страниц
+
+1. Создать файл в `src/views/`
+2. Добавить маршрут в `src/router/index.js`
+3. Импортировать и использовать в App.vue через router-view
+
 ### Добавление новых API-эндпоинтов
 
 1. Добавить новые функции в `src/api/weeklyTasks.js`
@@ -314,7 +340,7 @@ VITE_BACKEND_URL=http://air-task-back:8090 docker-compose up -d
 
 1. Создать файл в `src/components/`
 2. Использовать `.vue` расширение
-3. Импортировать в App.vue или другие компоненты
+3. Импортировать в нужные страницы или компоненты
 
 ### Изменение адреса backend
 

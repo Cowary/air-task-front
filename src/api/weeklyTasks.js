@@ -20,6 +20,21 @@ const apiClient = axios.create({
 });
 
 /**
+ * Возвращает текущее время в формате ISO с таймзоной Москвы
+ */
+const getMoscowTimeISO = () => {
+  return new Date().toLocaleString('sv-SE', {
+    timeZone: 'Europe/Moscow',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit'
+  }).replace(' ', 'T') + '+03:00';
+};
+
+/**
  * Получает статистику выполнения задач за текущую неделю
  * 
  * API endpoint: GET /api/completed-weekly/v1/statistics/current-week
@@ -32,14 +47,10 @@ const apiClient = axios.create({
  */
 export const getWeeklyTaskStatistics = async () => {
   try {
-    // Выполняем GET-запрос к API
     const response = await apiClient.get('/api/completed-weekly/v1/statistics/current-week');
-    // Возвращаем данные из ответа сервера
     return response.data;
   } catch (error) {
-    // Если произошла ошибка, выводим её в консоль для отладки
     console.error('Ошибка при получении статистики:', error);
-    // Пробрасываем ошибку дальше, чтобы компонент мог её обработать
     throw error;
   }
 };
@@ -54,38 +65,130 @@ export const getWeeklyTaskStatistics = async () => {
  */
 export const completeWeeklyTask = async (weeklyEntityId) => {
   try {
-    // Формируем тело запроса согласно спецификации OpenAPI
-    // completedDate - текущая дата и время в формате ISO
     const requestBody = {
       weeklyEntityId: weeklyEntityId,
       completedDate: getMoscowTimeISO()
     };
     
-    // Выполняем POST-запрос для создания записи о выполненной задаче
     const response = await apiClient.post('/api/completed-weekly/v1', requestBody);
-    // Возвращаем данные из ответа сервера
     return response.data;
   } catch (error) {
-    // Если произошла ошибка, выводим её в консоль для отладки
     console.error('Ошибка при отметке задачи:', error);
-    // Пробрасываем ошибку дальше
     throw error;
   }
 };
 
 /**
- * Возвращает текущее время в формате ISO с таймзоной Москвы
+ * Получает список всех недельных задач
+ * 
+ * API endpoint: GET /api/weekly/v1/list
+ * 
+ * @returns {Promise} Промис с данными от сервера
  */
-const getMoscowTimeISO = () => {
-  return new Date().toLocaleString('sv-SE', {
-    timeZone: 'Europe/Moscow',
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-    hour: '2-digit',
-    minute: '2-digit',
-    second: '2-digit'
-  }).replace(' ', 'T') + '+03:00';
+export const getAllWeeklyTasks = async () => {
+  try {
+    const response = await apiClient.get('/api/weekly/v1/list');
+    return response.data;
+  } catch (error) {
+    console.error('Ошибка при получении списка задач:', error);
+    throw error;
+  }
+};
+
+/**
+ * Получает список всех проектов
+ * 
+ * API endpoint: GET /api/project/v1/list
+ * 
+ * @returns {Promise} Промис с данными от сервера
+ */
+export const getAllProjects = async () => {
+  try {
+    const response = await apiClient.get('/api/project/v1/list');
+    return response.data;
+  } catch (error) {
+    console.error('Ошибка при получении списка проектов:', error);
+    throw error;
+  }
+};
+
+/**
+ * Создаёт новую недельную задачу
+ * 
+ * API endpoint: POST /api/weekly/v1
+ * 
+ * @param {Object} taskData - Данные для создания задачи
+ * @param {string} taskData.name - Название задачи
+ * @param {number} taskData.count - Требуемое количество выполнений
+ * @param {number} taskData.projectId - ID проекта
+ * @param {string} taskData.priority - Приоритет (HIGH, MIDDLE, LOW)
+ * @param {string} taskData.status - Статус (IN_PROGRESS, DONE)
+ * @returns {Promise} Промис с данными от сервера
+ */
+export const createWeeklyTask = async (taskData) => {
+  try {
+    const requestBody = {
+      name: taskData.name,
+      count: taskData.count,
+      projectId: taskData.projectId,
+      priority: taskData.priority || 'MIDDLE',
+      status: taskData.status || 'IN_PROGRESS'
+    };
+    
+    const response = await apiClient.post('/api/weekly/v1', requestBody);
+    return response.data;
+  } catch (error) {
+    console.error('Ошибка при создании задачи:', error);
+    throw error;
+  }
+};
+
+/**
+ * Обновляет недельную задачу
+ * 
+ * API endpoint: PUT /api/weekly/v1/{id}
+ * 
+ * @param {number} id - ID задачи
+ * @param {Object} taskData - Данные для обновления
+ * @param {string} taskData.name - Название задачи
+ * @param {number} taskData.count - Требуемое количество выполнений
+ * @param {string} taskData.priority - Приоритет (HIGH, MIDDLE, LOW)
+ * @param {string} taskData.status - Статус (IN_PROGRESS, DONE)
+ * @returns {Promise} Промис с данными от сервера
+ */
+export const updateWeeklyTask = async (id, taskData) => {
+  try {
+    const requestBody = {
+      name: taskData.name,
+      count: taskData.count,
+      priority: taskData.priority,
+      status: taskData.status
+    };
+    
+    const response = await apiClient.put(`/api/weekly/v1/${id}`, requestBody);
+    return response.data;
+  } catch (error) {
+    console.error('Ошибка при обновлении задачи:', error);
+    throw error;
+  }
+};
+
+/**
+ * Удаляет недельную задачу
+ * 
+ * API endpoint: DELETE /api/weekly/v1/{id}
+ * 
+ * @param {number} id - ID задачи для удаления
+ * @returns {Promise} Промис с данными от сервера
+ */
+export const deleteWeeklyTask = async (id) => {
+  try {
+    const response = await apiClient.delete(`/api/weekly/v1/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error('Ошибка при удалении задачи:', error);
+    throw error;
+  }
 };
 
 // Экспортируем объект apiClient на случай, если нужно будет делать другие запросы
